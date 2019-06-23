@@ -10,6 +10,7 @@ typedef enum
 
 const size_t threshold = 10;
 bool pin_state;
+
 /*
  * @brief get stable state of given gpio pin
  *
