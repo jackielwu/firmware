@@ -1,5 +1,26 @@
 #include "debounce.h"
 
+typedef enum
+{
+  stable_h,
+  to_l,
+  stable_l,
+  to_h
+} debounce_state_t;
+
+const size_t threshold = 10;
+bool pin_state;
+
+/*
+ * @brief: get instant state of given gpio pin
+ *
+ * @param: pin, the gpio pin to read
+ *
+ * @return: pin state
+ */
+bool read_pin(gpio_t pin);
+
+
 void debounce(gpio_t pin)
 {
 	size_t counter = 0;
@@ -48,7 +69,12 @@ void debounce(gpio_t pin)
 	}
 }
 
-bool getStablePinState(gpio_t	pin)
+bool get_stable_pin_state(gpio_t pin)
 {
 		return pin_state;
+}
+
+void init(gpio_t pin)
+{
+	debounce(pin);
 }
