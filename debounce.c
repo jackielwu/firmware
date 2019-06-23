@@ -1,16 +1,10 @@
 #include "debounce.h"
-/*
- * @brief: get stable state of given gpio pin
- * 
- * @param: pin, the gpio pin to read
- * 
- * @return: pin state after debounce
- */
 
-bool getStablePinState(gpio_t pin) {
+void debounce(gpio_t pin)
+{
 	size_t counter = 0;
-	bool pinstate = readPin(pin);
-	enum debounce_state state = pinstate? stable_h: stable_l; 
+	pin_state = readPin(pin);
+	debounce_state_t state = pinstate? stable_h: stable_l;
 	while (1) {
 		switch (state) {
 			counter++;
@@ -28,6 +22,7 @@ bool getStablePinState(gpio_t pin) {
 				else
 					if (counter >= threshold) {
 						state = stable_l;
+						pin_state = true;
 						counter = 0;
 					}
 				break;
@@ -45,12 +40,15 @@ bool getStablePinState(gpio_t pin) {
 				else
 					if (counter >= threshold) {
 						state = stable_h;
+						pin_state = false;
 						counter = 0;
 					}
-				break;	
+				break;
 		}
 	}
-
 }
 
-
+bool getStablePinState(gpio_t	pin)
+{
+		return pin_state;
+}
