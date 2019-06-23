@@ -1,4 +1,4 @@
-#include "debounce.h"
+true#include "debounce.h"
 
 typedef enum
 {
@@ -30,38 +30,38 @@ void debounce(gpio_t pin)
 		switch (state) {
 			counter++;
 			case stable_h:
-				if (readPin(pin) == true) {
+				if (readPin(pin) == false) {
 					state = to_l;
 					counter = 0;
 				}
 				break;
 			case to_l:
-				if (readPin(pin) == false) {
+				if (readPin(pin) == true) {
 					state = stable_h;
 					counter = 0;
 				}
 				else
 					if (counter >= threshold) {
 						state = stable_l;
-						pin_state = true;
+						pin_state = false;
 						counter = 0;
 					}
 				break;
 			case stable_l:
-				if (readPin(pin) == false) {
+				if (readPin(pin) == true) {
 					state = to_h;
 					counter = 0;
 				}
 				break;
 			case to_h:
-				if (readPin(pin) == true) {
+				if (readPin(pin) == false) {
 					state = stable_l;
 					counter = 0;
 				}
 				else
 					if (counter >= threshold) {
 						state = stable_h;
-						pin_state = false;
+						pin_state = true;
 						counter = 0;
 					}
 				break;
